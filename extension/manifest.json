@@ -1,0 +1,50 @@
+{
+  "manifest_version": 3,
+  "name": "ScamScout - Fake Job Detector",
+  "version": "1.0.0",
+  "description": "Detect fake job postings on the spot. Rates the fakeness of job listings across LinkedIn, Indeed, Glassdoor, and more.",
+  "permissions": ["activeTab", "storage"],
+  "host_permissions": [
+    "https://*.linkedin.com/*",
+    "https://*.indeed.com/*",
+    "https://*.glassdoor.com/*",
+    "https://*.naukri.com/*",
+    "https://*.monster.com/*",
+    "https://*.ziprecruiter.com/*",
+    "https://*.careerbuilder.com/*",
+    "https://*.simplyhired.com/*",
+    "https://*.dice.com/*",
+    "https://*.stackoverflow.com/*",
+    "https://api.scrappingant.com/*",
+    "https://*/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "lib/nlp_detector.js",
+        "lib/rules_detector.js",
+        "lib/overlay.js",
+        "content.js"
+      ],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}

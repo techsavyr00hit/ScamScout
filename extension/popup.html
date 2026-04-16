@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScamScout</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <div class="popup-header">
+      <div class="brand">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        <h1>ScamScout</h1>
+      </div>
+      <p class="tagline">Fake Job Posting Detector</p>
+    </div>
+
+    <div class="input-section">
+      <label for="url-input">Job Posting URL</label>
+      <input type="url" id="url-input" placeholder="https://linkedin.com/jobs/view/..." />
+
+      <label for="description-input">Job Description (optional)</label>
+      <textarea id="description-input" placeholder="Paste job description text here for deeper analysis..." rows="4"></textarea>
+
+      <button id="analyze-btn" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.35-4.35"/>
+        </svg>
+        Analyze
+      </button>
+    </div>
+
+    <div class="scraping-section">
+      <div class="scraping-header">
+        <div class="scraping-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+          </svg>
+          <span>Web Scraping (ScrappingAnt)</span>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="scraping-toggle" />
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="scraping-config" id="scraping-config">
+        <label for="api-key-input">API Key</label>
+        <div class="api-key-row">
+          <input type="password" id="api-key-input" value="50d7b9bfd4014118acfbd83a7078b70b" placeholder="Enter your ScrappingAnt API key" />
+          <button id="toggle-api-key" class="btn-icon" title="Show/hide API key">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="eye-icon">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+        <p class="scraping-hint">When enabled, extracts clean job HTML via ScrappingAnt API. Uses <span id="api-usage-count">0</span> requests.</p>
+      </div>
+    </div>
+
+    <div id="result-section" class="result-section" style="display: none;">
+      <div class="score-display">
+        <div class="score-ring">
+          <svg width="100" height="100" viewBox="0 0 100 100">
+            <circle class="ring-bg" cx="50" cy="50" r="42" />
+            <circle class="ring-fill" cx="50" cy="50" r="42" id="score-ring" />
+          </svg>
+          <div class="score-value" id="score-value">0</div>
+        </div>
+        <div class="status-text" id="status-text">Analyzing...</div>
+      </div>
+
+      <div id="flags-section" class="flags-section">
+        <div class="flags-container">
+          <div class="flag-group">
+            <h3 class="flag-title red-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M4 19V5c0-1.1.9-2 2-2h8.5L20 8.5V18c0 .55-.45 1-1 1H5c-1.1 0-1.99-.9-1.99-1zM13 9V3.5L18.5 9H13z"/>
+              </svg>
+              Red Flags
+            </h3>
+            <div id="red-flags" class="flag-list"></div>
+          </div>
+
+          <div class="flag-group">
+            <h3 class="flag-title green-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+              </svg>
+              Positive Signs
+            </h3>
+            <div id="green-flags" class="flag-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="suggestions-section" class="suggestions-section" style="display: none;">
+        <h3>💡 Tips</h3>
+        <div id="suggestions-list"></div>
+      </div>
+    </div>
+
+    <div id="loading-section" class="loading-section" style="display: none;">
+      <div class="spinner"></div>
+      <p>Analyzing job posting...</p>
+    </div>
+
+    <div class="footer">
+      <p>ScamScout v1.0 • Stay safe from job scams</p>
+    </div>
+  </div>
+
+  <script src="lib/nlp_detector.js?v=2"></script>
+  <script src="lib/rules_detector.js?v=2"></script>
+  <script src="popup.js?v=2"></script>
+</body>
+</html>
